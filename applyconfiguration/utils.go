@@ -20,10 +20,8 @@ package applyconfiguration
 import (
 	v1 "github.com/edgelive/pkg/apis/heartbeat/v1"
 	rulev1 "github.com/edgelive/pkg/apis/rule/v1"
-	servicev1 "github.com/edgelive/pkg/apis/service/v1"
 	heartbeatv1 "github.com/edgelive/pkg/applyconfiguration/heartbeat/v1"
 	applyconfigurationrulev1 "github.com/edgelive/pkg/applyconfiguration/rule/v1"
-	applyconfigurationservicev1 "github.com/edgelive/pkg/applyconfiguration/service/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 )
 
@@ -38,10 +36,6 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		// Group=rule, Version=v1
 	case rulev1.SchemeGroupVersion.WithKind("Rule"):
 		return &applyconfigurationrulev1.RuleApplyConfiguration{}
-
-		// Group=service, Version=v1
-	case servicev1.SchemeGroupVersion.WithKind("Service"):
-		return &applyconfigurationservicev1.ServiceApplyConfiguration{}
 
 	}
 	return nil

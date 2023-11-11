@@ -18,17 +18,12 @@ limitations under the License.
 package fake
 
 import (
-	v1 "github.com/edgelive/pkg/clientset/versioned/typed/service/v1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
 
 type FakeServiceV1 struct {
 	*testing.Fake
-}
-
-func (c *FakeServiceV1) Services(namespace string) v1.ServiceInterface {
-	return &FakeServices{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate

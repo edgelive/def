@@ -26,7 +26,6 @@ import (
 	heartbeat "github.com/edgelive/pkg/informers/externalversions/heartbeat"
 	internalinterfaces "github.com/edgelive/pkg/informers/externalversions/internalinterfaces"
 	rule "github.com/edgelive/pkg/informers/externalversions/rule"
-	service "github.com/edgelive/pkg/informers/externalversions/service"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -246,7 +245,6 @@ type SharedInformerFactory interface {
 
 	Heartbeat() heartbeat.Interface
 	Rule() rule.Interface
-	Service() service.Interface
 }
 
 func (f *sharedInformerFactory) Heartbeat() heartbeat.Interface {
@@ -255,8 +253,4 @@ func (f *sharedInformerFactory) Heartbeat() heartbeat.Interface {
 
 func (f *sharedInformerFactory) Rule() rule.Interface {
 	return rule.New(f, f.namespace, f.tweakListOptions)
-}
-
-func (f *sharedInformerFactory) Service() service.Interface {
-	return service.New(f, f.namespace, f.tweakListOptions)
 }

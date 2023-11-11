@@ -22,7 +22,6 @@ import (
 
 	v1 "github.com/edgelive/pkg/apis/heartbeat/v1"
 	rulev1 "github.com/edgelive/pkg/apis/rule/v1"
-	servicev1 "github.com/edgelive/pkg/apis/service/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -60,10 +59,6 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		// Group=rule, Version=v1
 	case rulev1.SchemeGroupVersion.WithResource("rules"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Rule().V1().Rules().Informer()}, nil
-
-		// Group=service, Version=v1
-	case servicev1.SchemeGroupVersion.WithResource("services"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Service().V1().Services().Informer()}, nil
 
 	}
 
