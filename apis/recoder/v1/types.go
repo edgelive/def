@@ -6,7 +6,7 @@ import (
 
 // +genclient
 // +genclient:noStatus
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/def/runtime.Object
 
 // Recorder describes a recoder.
 type Recorder struct {
@@ -28,7 +28,7 @@ type StatusSpec struct {
 	Val     string //deleting,deleted,creating,created,pausing,paused
 }
 
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/def/runtime.Object
 
 // RecorderList is a list of Recorder resources
 type RecorderList struct {

@@ -1,4 +1,4 @@
-module github.com/edgelive/pkg
+module github.com/edgelive/def
 
 go 1.15
 

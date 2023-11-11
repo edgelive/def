@@ -43,7 +43,7 @@ var localSchemeBuilder = runtime.SchemeBuilder{
 //	import (
 //	  "k8s.io/client-go/kubernetes"
 //	  clientsetscheme "k8s.io/client-go/kubernetes/scheme"
-//	  aggregatorclientsetscheme "k8s.io/kube-aggregator/pkg/client/clientset_generated/clientset/scheme"
+//	  aggregatorclientsetscheme "k8s.io/kube-aggregator/def/client/clientset_generated/clientset/scheme"
 //	)
 //
 //	kclientset, _ := kubernetes.NewForConfig(c)

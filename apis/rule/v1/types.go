@@ -6,7 +6,7 @@ import (
 
 // +genclient
 // +genclient:noStatus
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/def/runtime.Object
 
 // Rule describes a rule.
 type Rule struct {
@@ -20,7 +20,7 @@ type Rule struct {
 type RuleSpec struct {
 }
 
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/def/runtime.Object
 
 // RuleList is a list of Rule resources
 type RuleList struct {
