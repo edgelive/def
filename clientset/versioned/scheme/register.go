@@ -18,9 +18,8 @@ limitations under the License.
 package scheme
 
 import (
-	heartbeatv1 "github.com/edgelive/pkg/apis/heartbeat/v1"
-	rulev1 "github.com/edgelive/pkg/apis/rule/v1"
-	servicev1 "github.com/edgelive/pkg/apis/service/v1"
+	heartbeatv1 "github.com/edgelive/def/apis/heartbeat/v1"
+	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -33,8 +32,7 @@ var Codecs = serializer.NewCodecFactory(Scheme)
 var ParameterCodec = runtime.NewParameterCodec(Scheme)
 var localSchemeBuilder = runtime.SchemeBuilder{
 	heartbeatv1.AddToScheme,
-	rulev1.AddToScheme,
-	servicev1.AddToScheme,
+	recorderv1.AddToScheme,
 }
 
 // AddToScheme adds all types of this clientset into the given scheme. This allows composition
@@ -43,7 +41,7 @@ var localSchemeBuilder = runtime.SchemeBuilder{
 //	import (
 //	  "k8s.io/client-go/kubernetes"
 //	  clientsetscheme "k8s.io/client-go/kubernetes/scheme"
-//	  aggregatorclientsetscheme "k8s.io/kube-aggregator/def/client/clientset_generated/clientset/scheme"
+//	  aggregatorclientsetscheme "k8s.io/kube-aggregator/pkg/client/clientset_generated/clientset/scheme"
 //	)
 //
 //	kclientset, _ := kubernetes.NewForConfig(c)

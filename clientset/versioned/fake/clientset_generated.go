@@ -18,13 +18,11 @@ limitations under the License.
 package fake
 
 import (
-	clientset "github.com/edgelive/pkg/clientset/versioned"
-	heartbeatv1 "github.com/edgelive/pkg/clientset/versioned/typed/heartbeat/v1"
-	fakeheartbeatv1 "github.com/edgelive/pkg/clientset/versioned/typed/heartbeat/v1/fake"
-	rulev1 "github.com/edgelive/pkg/clientset/versioned/typed/rule/v1"
-	fakerulev1 "github.com/edgelive/pkg/clientset/versioned/typed/rule/v1/fake"
-	servicev1 "github.com/edgelive/pkg/clientset/versioned/typed/service/v1"
-	fakeservicev1 "github.com/edgelive/pkg/clientset/versioned/typed/service/v1/fake"
+	clientset "github.com/edgelive/def/clientset/versioned"
+	heartbeatv1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1"
+	fakeheartbeatv1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1/fake"
+	recorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1"
+	fakerecorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -87,12 +85,7 @@ func (c *Clientset) HeartbeatV1() heartbeatv1.HeartbeatV1Interface {
 	return &fakeheartbeatv1.FakeHeartbeatV1{Fake: &c.Fake}
 }
 
-// RuleV1 retrieves the RuleV1Client
-func (c *Clientset) RuleV1() rulev1.RuleV1Interface {
-	return &fakerulev1.FakeRuleV1{Fake: &c.Fake}
-}
-
-// ServiceV1 retrieves the ServiceV1Client
-func (c *Clientset) ServiceV1() servicev1.ServiceV1Interface {
-	return &fakeservicev1.FakeServiceV1{Fake: &c.Fake}
+// RecorderV1 retrieves the RecorderV1Client
+func (c *Clientset) RecorderV1() recorderv1.RecorderV1Interface {
+	return &fakerecorderv1.FakeRecorderV1{Fake: &c.Fake}
 }

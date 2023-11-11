@@ -21,69 +21,69 @@ import (
 	"context"
 	time "time"
 
-	heartbeatv1 "github.com/edgelive/def/apis/heartbeat/v1"
+	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
 	versioned "github.com/edgelive/def/clientset/versioned"
 	internalinterfaces "github.com/edgelive/def/informers/externalversions/internalinterfaces"
-	v1 "github.com/edgelive/def/listers/heartbeat/v1"
+	v1 "github.com/edgelive/def/listers/recorder/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	watch "k8s.io/apimachinery/pkg/watch"
 	cache "k8s.io/client-go/tools/cache"
 )
 
-// HeartbeatInformer provides access to a shared informer and lister for
-// Heartbeats.
-type HeartbeatInformer interface {
+// RecorderInformer provides access to a shared informer and lister for
+// Recorders.
+type RecorderInformer interface {
 	Informer() cache.SharedIndexInformer
-	Lister() v1.HeartbeatLister
+	Lister() v1.RecorderLister
 }
 
-type heartbeatInformer struct {
+type recorderInformer struct {
 	factory          internalinterfaces.SharedInformerFactory
 	tweakListOptions internalinterfaces.TweakListOptionsFunc
 	namespace        string
 }
 
-// NewHeartbeatInformer constructs a new informer for Heartbeat type.
+// NewRecorderInformer constructs a new informer for Recorder type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewHeartbeatInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
-	return NewFilteredHeartbeatInformer(client, namespace, resyncPeriod, indexers, nil)
+func NewRecorderInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers) cache.SharedIndexInformer {
+	return NewFilteredRecorderInformer(client, namespace, resyncPeriod, indexers, nil)
 }
 
-// NewFilteredHeartbeatInformer constructs a new informer for Heartbeat type.
+// NewFilteredRecorderInformer constructs a new informer for Recorder type.
 // Always prefer using an informer factory to get a shared informer instead of getting an independent
 // one. This reduces memory footprint and number of connections to the server.
-func NewFilteredHeartbeatInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
+func NewFilteredRecorderInformer(client versioned.Interface, namespace string, resyncPeriod time.Duration, indexers cache.Indexers, tweakListOptions internalinterfaces.TweakListOptionsFunc) cache.SharedIndexInformer {
 	return cache.NewSharedIndexInformer(
 		&cache.ListWatch{
 			ListFunc: func(options metav1.ListOptions) (runtime.Object, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.HeartbeatV1().Heartbeats(namespace).List(context.TODO(), options)
+				return client.RecorderV1().Recorders(namespace).List(context.TODO(), options)
 			},
 			WatchFunc: func(options metav1.ListOptions) (watch.Interface, error) {
 				if tweakListOptions != nil {
 					tweakListOptions(&options)
 				}
-				return client.HeartbeatV1().Heartbeats(namespace).Watch(context.TODO(), options)
+				return client.RecorderV1().Recorders(namespace).Watch(context.TODO(), options)
 			},
 		},
-		&heartbeatv1.Heartbeat{},
+		&recorderv1.Recorder{},
 		resyncPeriod,
 		indexers,
 	)
 }
 
-func (f *heartbeatInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
-	return NewFilteredHeartbeatInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
+func (f *recorderInformer) defaultInformer(client versioned.Interface, resyncPeriod time.Duration) cache.SharedIndexInformer {
+	return NewFilteredRecorderInformer(client, f.namespace, resyncPeriod, cache.Indexers{cache.NamespaceIndex: cache.MetaNamespaceIndexFunc}, f.tweakListOptions)
 }
 
-func (f *heartbeatInformer) Informer() cache.SharedIndexInformer {
-	return f.factory.InformerFor(&heartbeatv1.Heartbeat{}, f.defaultInformer)
+func (f *recorderInformer) Informer() cache.SharedIndexInformer {
+	return f.factory.InformerFor(&recorderv1.Recorder{}, f.defaultInformer)
 }
 
-func (f *heartbeatInformer) Lister() v1.HeartbeatLister {
-	return v1.NewHeartbeatLister(f.Informer().GetIndexer())
+func (f *recorderInformer) Lister() v1.RecorderLister {
+	return v1.NewRecorderLister(f.Informer().GetIndexer())
 }

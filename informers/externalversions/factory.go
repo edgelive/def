@@ -22,10 +22,10 @@ import (
 	sync "sync"
 	time "time"
 
-	versioned "github.com/edgelive/pkg/clientset/versioned"
-	heartbeat "github.com/edgelive/pkg/informers/externalversions/heartbeat"
-	internalinterfaces "github.com/edgelive/pkg/informers/externalversions/internalinterfaces"
-	rule "github.com/edgelive/pkg/informers/externalversions/rule"
+	versioned "github.com/edgelive/def/clientset/versioned"
+	heartbeat "github.com/edgelive/def/informers/externalversions/heartbeat"
+	internalinterfaces "github.com/edgelive/def/informers/externalversions/internalinterfaces"
+	recorder "github.com/edgelive/def/informers/externalversions/recorder"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -244,13 +244,13 @@ type SharedInformerFactory interface {
 	InformerFor(obj runtime.Object, newFunc internalinterfaces.NewInformerFunc) cache.SharedIndexInformer
 
 	Heartbeat() heartbeat.Interface
-	Rule() rule.Interface
+	Recorder() recorder.Interface
 }
 
 func (f *sharedInformerFactory) Heartbeat() heartbeat.Interface {
 	return heartbeat.New(f, f.namespace, f.tweakListOptions)
 }
 
-func (f *sharedInformerFactory) Rule() rule.Interface {
-	return rule.New(f, f.namespace, f.tweakListOptions)
+func (f *sharedInformerFactory) Recorder() recorder.Interface {
+	return recorder.New(f, f.namespace, f.tweakListOptions)
 }

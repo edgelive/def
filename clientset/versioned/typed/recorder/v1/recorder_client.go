@@ -20,29 +20,29 @@ package v1
 import (
 	"net/http"
 
-	v1 "github.com/edgelive/def/apis/heartbeat/v1"
+	v1 "github.com/edgelive/def/apis/recorder/v1"
 	"github.com/edgelive/def/clientset/versioned/scheme"
 	rest "k8s.io/client-go/rest"
 )
 
-type HeartbeatV1Interface interface {
+type RecorderV1Interface interface {
 	RESTClient() rest.Interface
-	HeartbeatsGetter
+	RecordersGetter
 }
 
-// HeartbeatV1Client is used to interact with features provided by the heartbeat group.
-type HeartbeatV1Client struct {
+// RecorderV1Client is used to interact with features provided by the recorder group.
+type RecorderV1Client struct {
 	restClient rest.Interface
 }
 
-func (c *HeartbeatV1Client) Heartbeats(namespace string) HeartbeatInterface {
-	return newHeartbeats(c, namespace)
+func (c *RecorderV1Client) Recorders(namespace string) RecorderInterface {
+	return newRecorders(c, namespace)
 }
 
-// NewForConfig creates a new HeartbeatV1Client for the given config.
+// NewForConfig creates a new RecorderV1Client for the given config.
 // NewForConfig is equivalent to NewForConfigAndClient(c, httpClient),
 // where httpClient was generated with rest.HTTPClientFor(c).
-func NewForConfig(c *rest.Config) (*HeartbeatV1Client, error) {
+func NewForConfig(c *rest.Config) (*RecorderV1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -54,9 +54,9 @@ func NewForConfig(c *rest.Config) (*HeartbeatV1Client, error) {
 	return NewForConfigAndClient(&config, httpClient)
 }
 
-// NewForConfigAndClient creates a new HeartbeatV1Client for the given config and http client.
+// NewForConfigAndClient creates a new RecorderV1Client for the given config and http client.
 // Note the http client provided takes precedence over the configured transport values.
-func NewForConfigAndClient(c *rest.Config, h *http.Client) (*HeartbeatV1Client, error) {
+func NewForConfigAndClient(c *rest.Config, h *http.Client) (*RecorderV1Client, error) {
 	config := *c
 	if err := setConfigDefaults(&config); err != nil {
 		return nil, err
@@ -65,12 +65,12 @@ func NewForConfigAndClient(c *rest.Config, h *http.Client) (*HeartbeatV1Client, 
 	if err != nil {
 		return nil, err
 	}
-	return &HeartbeatV1Client{client}, nil
+	return &RecorderV1Client{client}, nil
 }
 
-// NewForConfigOrDie creates a new HeartbeatV1Client for the given config and
+// NewForConfigOrDie creates a new RecorderV1Client for the given config and
 // panics if there is an error in the config.
-func NewForConfigOrDie(c *rest.Config) *HeartbeatV1Client {
+func NewForConfigOrDie(c *rest.Config) *RecorderV1Client {
 	client, err := NewForConfig(c)
 	if err != nil {
 		panic(err)
@@ -78,9 +78,9 @@ func NewForConfigOrDie(c *rest.Config) *HeartbeatV1Client {
 	return client
 }
 
-// New creates a new HeartbeatV1Client for the given RESTClient.
-func New(c rest.Interface) *HeartbeatV1Client {
-	return &HeartbeatV1Client{c}
+// New creates a new RecorderV1Client for the given RESTClient.
+func New(c rest.Interface) *RecorderV1Client {
+	return &RecorderV1Client{c}
 }
 
 func setConfigDefaults(config *rest.Config) error {
@@ -98,7 +98,7 @@ func setConfigDefaults(config *rest.Config) error {
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *HeartbeatV1Client) RESTClient() rest.Interface {
+func (c *RecorderV1Client) RESTClient() rest.Interface {
 	if c == nil {
 		return nil
 	}

@@ -23,8 +23,8 @@ import (
 
 // Interface provides access to all the informers in this group version.
 type Interface interface {
-	// Heartbeats returns a HeartbeatInformer.
-	Heartbeats() HeartbeatInformer
+	// Recorders returns a RecorderInformer.
+	Recorders() RecorderInformer
 }
 
 type version struct {
@@ -38,7 +38,7 @@ func New(f internalinterfaces.SharedInformerFactory, namespace string, tweakList
 	return &version{factory: f, namespace: namespace, tweakListOptions: tweakListOptions}
 }
 
-// Heartbeats returns a HeartbeatInformer.
-func (v *version) Heartbeats() HeartbeatInformer {
-	return &heartbeatInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
+// Recorders returns a RecorderInformer.
+func (v *version) Recorders() RecorderInformer {
+	return &recorderInformer{factory: v.factory, namespace: v.namespace, tweakListOptions: v.tweakListOptions}
 }

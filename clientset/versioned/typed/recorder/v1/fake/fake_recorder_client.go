@@ -18,22 +18,22 @@ limitations under the License.
 package fake
 
 import (
-	v1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1"
+	v1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1"
 	rest "k8s.io/client-go/rest"
 	testing "k8s.io/client-go/testing"
 )
 
-type FakeHeartbeatV1 struct {
+type FakeRecorderV1 struct {
 	*testing.Fake
 }
 
-func (c *FakeHeartbeatV1) Heartbeats(namespace string) v1.HeartbeatInterface {
-	return &FakeHeartbeats{c, namespace}
+func (c *FakeRecorderV1) Recorders(namespace string) v1.RecorderInterface {
+	return &FakeRecorders{c, namespace}
 }
 
 // RESTClient returns a RESTClient that is used to communicate
 // with API server by this client implementation.
-func (c *FakeHeartbeatV1) RESTClient() rest.Interface {
+func (c *FakeRecorderV1) RESTClient() rest.Interface {
 	var ret *rest.RESTClient
 	return ret
 }

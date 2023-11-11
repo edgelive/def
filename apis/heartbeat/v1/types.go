@@ -6,7 +6,7 @@ import (
 
 // +genclient
 // +genclient:noStatus
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/def/runtime.Object
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // Heartbeat describes a heartbeat.
 type Heartbeat struct {
@@ -24,7 +24,7 @@ type HeartbeatSpec struct {
 	//NodeName string
 }
 
-// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/def/runtime.Object
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // HeartbeatList is a list of Heartbeat resources
 type HeartbeatList struct {

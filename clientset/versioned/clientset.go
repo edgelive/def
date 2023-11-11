@@ -21,9 +21,8 @@ import (
 	"fmt"
 	"net/http"
 
-	heartbeatv1 "github.com/edgelive/pkg/clientset/versioned/typed/heartbeat/v1"
-	rulev1 "github.com/edgelive/pkg/clientset/versioned/typed/rule/v1"
-	servicev1 "github.com/edgelive/pkg/clientset/versioned/typed/service/v1"
+	heartbeatv1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1"
+	recorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -32,16 +31,14 @@ import (
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
 	HeartbeatV1() heartbeatv1.HeartbeatV1Interface
-	RuleV1() rulev1.RuleV1Interface
-	ServiceV1() servicev1.ServiceV1Interface
+	RecorderV1() recorderv1.RecorderV1Interface
 }
 
 // Clientset contains the clients for groups.
 type Clientset struct {
 	*discovery.DiscoveryClient
 	heartbeatV1 *heartbeatv1.HeartbeatV1Client
-	ruleV1      *rulev1.RuleV1Client
-	serviceV1   *servicev1.ServiceV1Client
+	recorderV1  *recorderv1.RecorderV1Client
 }
 
 // HeartbeatV1 retrieves the HeartbeatV1Client
@@ -49,14 +46,9 @@ func (c *Clientset) HeartbeatV1() heartbeatv1.HeartbeatV1Interface {
 	return c.heartbeatV1
 }
 
-// RuleV1 retrieves the RuleV1Client
-func (c *Clientset) RuleV1() rulev1.RuleV1Interface {
-	return c.ruleV1
-}
-
-// ServiceV1 retrieves the ServiceV1Client
-func (c *Clientset) ServiceV1() servicev1.ServiceV1Interface {
-	return c.serviceV1
+// RecorderV1 retrieves the RecorderV1Client
+func (c *Clientset) RecorderV1() recorderv1.RecorderV1Interface {
+	return c.recorderV1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -107,11 +99,7 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
-	cs.ruleV1, err = rulev1.NewForConfigAndClient(&configShallowCopy, httpClient)
-	if err != nil {
-		return nil, err
-	}
-	cs.serviceV1, err = servicev1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	cs.recorderV1, err = recorderv1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
 	}
@@ -137,8 +125,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
 	cs.heartbeatV1 = heartbeatv1.New(c)
-	cs.ruleV1 = rulev1.New(c)
-	cs.serviceV1 = servicev1.New(c)
+	cs.recorderV1 = recorderv1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

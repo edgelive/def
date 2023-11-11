@@ -20,8 +20,8 @@ package externalversions
 import (
 	"fmt"
 
-	v1 "github.com/edgelive/pkg/apis/heartbeat/v1"
-	rulev1 "github.com/edgelive/pkg/apis/rule/v1"
+	v1 "github.com/edgelive/def/apis/heartbeat/v1"
+	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -56,9 +56,9 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 	case v1.SchemeGroupVersion.WithResource("heartbeats"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Heartbeat().V1().Heartbeats().Informer()}, nil
 
-		// Group=rule, Version=v1
-	case rulev1.SchemeGroupVersion.WithResource("rules"):
-		return &genericInformer{resource: resource.GroupResource(), informer: f.Rule().V1().Rules().Informer()}, nil
+		// Group=recorder, Version=v1
+	case recorderv1.SchemeGroupVersion.WithResource("recorders"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Recorder().V1().Recorders().Informer()}, nil
 
 	}
 

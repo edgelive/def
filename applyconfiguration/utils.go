@@ -18,10 +18,10 @@ limitations under the License.
 package applyconfiguration
 
 import (
-	v1 "github.com/edgelive/pkg/apis/heartbeat/v1"
-	rulev1 "github.com/edgelive/pkg/apis/rule/v1"
-	heartbeatv1 "github.com/edgelive/pkg/applyconfiguration/heartbeat/v1"
-	applyconfigurationrulev1 "github.com/edgelive/pkg/applyconfiguration/rule/v1"
+	v1 "github.com/edgelive/def/apis/heartbeat/v1"
+	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
+	heartbeatv1 "github.com/edgelive/def/applyconfiguration/heartbeat/v1"
+	applyconfigurationrecorderv1 "github.com/edgelive/def/applyconfiguration/recorder/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 )
 
@@ -33,9 +33,9 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 	case v1.SchemeGroupVersion.WithKind("Heartbeat"):
 		return &heartbeatv1.HeartbeatApplyConfiguration{}
 
-		// Group=rule, Version=v1
-	case rulev1.SchemeGroupVersion.WithKind("Rule"):
-		return &applyconfigurationrulev1.RuleApplyConfiguration{}
+		// Group=recorder, Version=v1
+	case recorderv1.SchemeGroupVersion.WithKind("Recorder"):
+		return &applyconfigurationrecorderv1.RecorderApplyConfiguration{}
 
 	}
 	return nil

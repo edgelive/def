@@ -23,9 +23,9 @@ import (
 	"fmt"
 	"time"
 
-	v1 "github.com/edgelive/pkg/apis/heartbeat/v1"
-	heartbeatv1 "github.com/edgelive/pkg/applyconfiguration/heartbeat/v1"
-	scheme "github.com/edgelive/pkg/clientset/versioned/scheme"
+	v1 "github.com/edgelive/def/apis/heartbeat/v1"
+	heartbeatv1 "github.com/edgelive/def/applyconfiguration/heartbeat/v1"
+	scheme "github.com/edgelive/def/clientset/versioned/scheme"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	types "k8s.io/apimachinery/pkg/types"
 	watch "k8s.io/apimachinery/pkg/watch"

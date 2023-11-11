@@ -18,8 +18,8 @@ limitations under the License.
 package heartbeat
 
 import (
-	v1 "github.com/edgelive/pkg/informers/externalversions/heartbeat/v1"
-	internalinterfaces "github.com/edgelive/pkg/informers/externalversions/internalinterfaces"
+	v1 "github.com/edgelive/def/informers/externalversions/heartbeat/v1"
+	internalinterfaces "github.com/edgelive/def/informers/externalversions/internalinterfaces"
 )
 
 // Interface provides access to each of this group's versions.
