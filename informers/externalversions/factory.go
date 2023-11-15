@@ -25,6 +25,7 @@ import (
 	versioned "github.com/edgelive/def/clientset/versioned"
 	heartbeat "github.com/edgelive/def/informers/externalversions/heartbeat"
 	internalinterfaces "github.com/edgelive/def/informers/externalversions/internalinterfaces"
+	node "github.com/edgelive/def/informers/externalversions/node"
 	recorder "github.com/edgelive/def/informers/externalversions/recorder"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -244,11 +245,16 @@ type SharedInformerFactory interface {
 	InformerFor(obj runtime.Object, newFunc internalinterfaces.NewInformerFunc) cache.SharedIndexInformer
 
 	Heartbeat() heartbeat.Interface
+	Node() node.Interface
 	Recorder() recorder.Interface
 }
 
 func (f *sharedInformerFactory) Heartbeat() heartbeat.Interface {
 	return heartbeat.New(f, f.namespace, f.tweakListOptions)
+}
+
+func (f *sharedInformerFactory) Node() node.Interface {
+	return node.New(f, f.namespace, f.tweakListOptions)
 }
 
 func (f *sharedInformerFactory) Recorder() recorder.Interface {

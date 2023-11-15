@@ -19,8 +19,10 @@ package applyconfiguration
 
 import (
 	v1 "github.com/edgelive/def/apis/heartbeat/v1"
+	nodev1 "github.com/edgelive/def/apis/node/v1"
 	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
 	heartbeatv1 "github.com/edgelive/def/applyconfiguration/heartbeat/v1"
+	applyconfigurationnodev1 "github.com/edgelive/def/applyconfiguration/node/v1"
 	applyconfigurationrecorderv1 "github.com/edgelive/def/applyconfiguration/recorder/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 )
@@ -32,6 +34,10 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 	// Group=heartbeat, Version=v1
 	case v1.SchemeGroupVersion.WithKind("Heartbeat"):
 		return &heartbeatv1.HeartbeatApplyConfiguration{}
+
+		// Group=node, Version=v1
+	case nodev1.SchemeGroupVersion.WithKind("Node"):
+		return &applyconfigurationnodev1.NodeApplyConfiguration{}
 
 		// Group=recorder, Version=v1
 	case recorderv1.SchemeGroupVersion.WithKind("Recorder"):

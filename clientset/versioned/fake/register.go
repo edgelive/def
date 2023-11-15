@@ -19,6 +19,7 @@ package fake
 
 import (
 	heartbeatv1 "github.com/edgelive/def/apis/heartbeat/v1"
+	nodev1 "github.com/edgelive/def/apis/node/v1"
 	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
@@ -32,6 +33,7 @@ var codecs = serializer.NewCodecFactory(scheme)
 
 var localSchemeBuilder = runtime.SchemeBuilder{
 	heartbeatv1.AddToScheme,
+	nodev1.AddToScheme,
 	recorderv1.AddToScheme,
 }
 

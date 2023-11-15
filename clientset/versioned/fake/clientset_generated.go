@@ -21,6 +21,8 @@ import (
 	clientset "github.com/edgelive/def/clientset/versioned"
 	heartbeatv1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1"
 	fakeheartbeatv1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1/fake"
+	nodev1 "github.com/edgelive/def/clientset/versioned/typed/node/v1"
+	fakenodev1 "github.com/edgelive/def/clientset/versioned/typed/node/v1/fake"
 	recorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1"
 	fakerecorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
@@ -83,6 +85,11 @@ var (
 // HeartbeatV1 retrieves the HeartbeatV1Client
 func (c *Clientset) HeartbeatV1() heartbeatv1.HeartbeatV1Interface {
 	return &fakeheartbeatv1.FakeHeartbeatV1{Fake: &c.Fake}
+}
+
+// NodeV1 retrieves the NodeV1Client
+func (c *Clientset) NodeV1() nodev1.NodeV1Interface {
+	return &fakenodev1.FakeNodeV1{Fake: &c.Fake}
 }
 
 // RecorderV1 retrieves the RecorderV1Client

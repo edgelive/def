@@ -22,6 +22,7 @@ import (
 	"net/http"
 
 	heartbeatv1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1"
+	nodev1 "github.com/edgelive/def/clientset/versioned/typed/node/v1"
 	recorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
@@ -31,6 +32,7 @@ import (
 type Interface interface {
 	Discovery() discovery.DiscoveryInterface
 	HeartbeatV1() heartbeatv1.HeartbeatV1Interface
+	NodeV1() nodev1.NodeV1Interface
 	RecorderV1() recorderv1.RecorderV1Interface
 }
 
@@ -38,12 +40,18 @@ type Interface interface {
 type Clientset struct {
 	*discovery.DiscoveryClient
 	heartbeatV1 *heartbeatv1.HeartbeatV1Client
+	nodeV1      *nodev1.NodeV1Client
 	recorderV1  *recorderv1.RecorderV1Client
 }
 
 // HeartbeatV1 retrieves the HeartbeatV1Client
 func (c *Clientset) HeartbeatV1() heartbeatv1.HeartbeatV1Interface {
 	return c.heartbeatV1
+}
+
+// NodeV1 retrieves the NodeV1Client
+func (c *Clientset) NodeV1() nodev1.NodeV1Interface {
+	return c.nodeV1
 }
 
 // RecorderV1 retrieves the RecorderV1Client
@@ -99,6 +107,10 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.nodeV1, err = nodev1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 	cs.recorderV1, err = recorderv1.NewForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
 		return nil, err
@@ -125,6 +137,7 @@ func NewForConfigOrDie(c *rest.Config) *Clientset {
 func New(c rest.Interface) *Clientset {
 	var cs Clientset
 	cs.heartbeatV1 = heartbeatv1.New(c)
+	cs.nodeV1 = nodev1.New(c)
 	cs.recorderV1 = recorderv1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
