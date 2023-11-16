@@ -20,8 +20,9 @@ type Recorder struct {
 
 // RecorderSpec is the spec for a Recorder resource
 type RecorderSpec struct {
-	Url    string
-	Vendor string
+	Url      string
+	Vendor   string
+	Revision int64
 }
 
 type CmdSpec struct {
