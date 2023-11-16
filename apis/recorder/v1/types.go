@@ -14,8 +14,8 @@ type Recorder struct {
 	metav1.ObjectMeta `json:"metadata,omitempty"`
 
 	Spec         RecorderSpec     `json:"spec"`
-	Cmd          CmdSpec          `json:"cmd"`   //主动下发的
-	RunningState RunningStateSpec `json:"state"` //主动上报的
+	Operate      OperateSpec      `json:"operate"` //主动下发的
+	RunningState RunningStateSpec `json:"state"`   //主动上报的
 }
 
 // RecorderSpec is the spec for a Recorder resource
@@ -25,7 +25,7 @@ type RecorderSpec struct {
 	Revision int64
 }
 
-type CmdSpec struct {
+type OperateSpec struct {
 	Created  metav1.Time
 	Updated  metav1.Time
 	Val      string //deleting,deleted,creating,created,pausing,paused

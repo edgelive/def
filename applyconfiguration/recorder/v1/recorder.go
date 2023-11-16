@@ -29,7 +29,9 @@ import (
 type RecorderApplyConfiguration struct {
 	v1.TypeMetaApplyConfiguration    `json:",inline"`
 	*v1.ObjectMetaApplyConfiguration `json:"metadata,omitempty"`
-	Spec                             *recorderv1.RecorderSpec `json:"spec,omitempty"`
+	Spec                             *recorderv1.RecorderSpec     `json:"spec,omitempty"`
+	Operate                          *recorderv1.OperateSpec      `json:"operate,omitempty"`
+	RunningState                     *recorderv1.RunningStateSpec `json:"state,omitempty"`
 }
 
 // Recorder constructs an declarative configuration of the Recorder type for use with
@@ -206,5 +208,21 @@ func (b *RecorderApplyConfiguration) ensureObjectMetaApplyConfigurationExists() 
 // If called multiple times, the Spec field is set to the value of the last call.
 func (b *RecorderApplyConfiguration) WithSpec(value recorderv1.RecorderSpec) *RecorderApplyConfiguration {
 	b.Spec = &value
+	return b
+}
+
+// WithOperate sets the Operate field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the Operate field is set to the value of the last call.
+func (b *RecorderApplyConfiguration) WithOperate(value recorderv1.OperateSpec) *RecorderApplyConfiguration {
+	b.Operate = &value
+	return b
+}
+
+// WithRunningState sets the RunningState field in the declarative configuration to the given value
+// and returns the receiver, so that objects can be built by chaining "With" function invocations.
+// If called multiple times, the RunningState field is set to the value of the last call.
+func (b *RecorderApplyConfiguration) WithRunningState(value recorderv1.RunningStateSpec) *RecorderApplyConfiguration {
+	b.RunningState = &value
 	return b
 }
