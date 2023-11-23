@@ -27,6 +27,7 @@ import (
 	internalinterfaces "github.com/edgelive/def/informers/externalversions/internalinterfaces"
 	node "github.com/edgelive/def/informers/externalversions/node"
 	recorder "github.com/edgelive/def/informers/externalversions/recorder"
+	secret "github.com/edgelive/def/informers/externalversions/secret"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	runtime "k8s.io/apimachinery/pkg/runtime"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
@@ -247,6 +248,7 @@ type SharedInformerFactory interface {
 	Heartbeat() heartbeat.Interface
 	Node() node.Interface
 	Recorder() recorder.Interface
+	Secret() secret.Interface
 }
 
 func (f *sharedInformerFactory) Heartbeat() heartbeat.Interface {
@@ -259,4 +261,8 @@ func (f *sharedInformerFactory) Node() node.Interface {
 
 func (f *sharedInformerFactory) Recorder() recorder.Interface {
 	return recorder.New(f, f.namespace, f.tweakListOptions)
+}
+
+func (f *sharedInformerFactory) Secret() secret.Interface {
+	return secret.New(f, f.namespace, f.tweakListOptions)
 }

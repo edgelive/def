@@ -21,9 +21,11 @@ import (
 	v1 "github.com/edgelive/def/apis/heartbeat/v1"
 	nodev1 "github.com/edgelive/def/apis/node/v1"
 	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
+	secretv1 "github.com/edgelive/def/apis/secret/v1"
 	heartbeatv1 "github.com/edgelive/def/applyconfiguration/heartbeat/v1"
 	applyconfigurationnodev1 "github.com/edgelive/def/applyconfiguration/node/v1"
 	applyconfigurationrecorderv1 "github.com/edgelive/def/applyconfiguration/recorder/v1"
+	applyconfigurationsecretv1 "github.com/edgelive/def/applyconfiguration/secret/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 )
 
@@ -42,6 +44,10 @@ func ForKind(kind schema.GroupVersionKind) interface{} {
 		// Group=recorder, Version=v1
 	case recorderv1.SchemeGroupVersion.WithKind("Recorder"):
 		return &applyconfigurationrecorderv1.RecorderApplyConfiguration{}
+
+		// Group=secret, Version=v1
+	case secretv1.SchemeGroupVersion.WithKind("Secret"):
+		return &applyconfigurationsecretv1.SecretApplyConfiguration{}
 
 	}
 	return nil

@@ -24,6 +24,7 @@ import (
 	heartbeatv1 "github.com/edgelive/def/clientset/versioned/typed/heartbeat/v1"
 	nodev1 "github.com/edgelive/def/clientset/versioned/typed/node/v1"
 	recorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1"
+	secretv1 "github.com/edgelive/def/clientset/versioned/typed/secret/v1"
 	discovery "k8s.io/client-go/discovery"
 	rest "k8s.io/client-go/rest"
 	flowcontrol "k8s.io/client-go/util/flowcontrol"
@@ -34,6 +35,7 @@ type Interface interface {
 	HeartbeatV1() heartbeatv1.HeartbeatV1Interface
 	NodeV1() nodev1.NodeV1Interface
 	RecorderV1() recorderv1.RecorderV1Interface
+	SecretV1() secretv1.SecretV1Interface
 }
 
 // Clientset contains the clients for groups.
@@ -42,6 +44,7 @@ type Clientset struct {
 	heartbeatV1 *heartbeatv1.HeartbeatV1Client
 	nodeV1      *nodev1.NodeV1Client
 	recorderV1  *recorderv1.RecorderV1Client
+	secretV1    *secretv1.SecretV1Client
 }
 
 // HeartbeatV1 retrieves the HeartbeatV1Client
@@ -57,6 +60,11 @@ func (c *Clientset) NodeV1() nodev1.NodeV1Interface {
 // RecorderV1 retrieves the RecorderV1Client
 func (c *Clientset) RecorderV1() recorderv1.RecorderV1Interface {
 	return c.recorderV1
+}
+
+// SecretV1 retrieves the SecretV1Client
+func (c *Clientset) SecretV1() secretv1.SecretV1Interface {
+	return c.secretV1
 }
 
 // Discovery retrieves the DiscoveryClient
@@ -115,6 +123,10 @@ func NewForConfigAndClient(c *rest.Config, httpClient *http.Client) (*Clientset,
 	if err != nil {
 		return nil, err
 	}
+	cs.secretV1, err = secretv1.NewForConfigAndClient(&configShallowCopy, httpClient)
+	if err != nil {
+		return nil, err
+	}
 
 	cs.DiscoveryClient, err = discovery.NewDiscoveryClientForConfigAndClient(&configShallowCopy, httpClient)
 	if err != nil {
@@ -139,6 +151,7 @@ func New(c rest.Interface) *Clientset {
 	cs.heartbeatV1 = heartbeatv1.New(c)
 	cs.nodeV1 = nodev1.New(c)
 	cs.recorderV1 = recorderv1.New(c)
+	cs.secretV1 = secretv1.New(c)
 
 	cs.DiscoveryClient = discovery.NewDiscoveryClient(c)
 	return &cs

@@ -25,6 +25,8 @@ import (
 	fakenodev1 "github.com/edgelive/def/clientset/versioned/typed/node/v1/fake"
 	recorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1"
 	fakerecorderv1 "github.com/edgelive/def/clientset/versioned/typed/recorder/v1/fake"
+	secretv1 "github.com/edgelive/def/clientset/versioned/typed/secret/v1"
+	fakesecretv1 "github.com/edgelive/def/clientset/versioned/typed/secret/v1/fake"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/watch"
 	"k8s.io/client-go/discovery"
@@ -95,4 +97,9 @@ func (c *Clientset) NodeV1() nodev1.NodeV1Interface {
 // RecorderV1 retrieves the RecorderV1Client
 func (c *Clientset) RecorderV1() recorderv1.RecorderV1Interface {
 	return &fakerecorderv1.FakeRecorderV1{Fake: &c.Fake}
+}
+
+// SecretV1 retrieves the SecretV1Client
+func (c *Clientset) SecretV1() secretv1.SecretV1Interface {
+	return &fakesecretv1.FakeSecretV1{Fake: &c.Fake}
 }

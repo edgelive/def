@@ -23,6 +23,7 @@ import (
 	v1 "github.com/edgelive/def/apis/heartbeat/v1"
 	nodev1 "github.com/edgelive/def/apis/node/v1"
 	recorderv1 "github.com/edgelive/def/apis/recorder/v1"
+	secretv1 "github.com/edgelive/def/apis/secret/v1"
 	schema "k8s.io/apimachinery/pkg/runtime/schema"
 	cache "k8s.io/client-go/tools/cache"
 )
@@ -64,6 +65,10 @@ func (f *sharedInformerFactory) ForResource(resource schema.GroupVersionResource
 		// Group=recorder, Version=v1
 	case recorderv1.SchemeGroupVersion.WithResource("recorders"):
 		return &genericInformer{resource: resource.GroupResource(), informer: f.Recorder().V1().Recorders().Informer()}, nil
+
+		// Group=secret, Version=v1
+	case secretv1.SchemeGroupVersion.WithResource("secrets"):
+		return &genericInformer{resource: resource.GroupResource(), informer: f.Secret().V1().Secrets().Informer()}, nil
 
 	}
 
