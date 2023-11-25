@@ -26,15 +26,16 @@ type RecorderSpec struct {
 }
 
 type OperateSpec struct {
-	Created  metav1.Time
-	Updated  metav1.Time
-	Val      string //deleting,deleted,creating,created,pausing,paused
-	Feedback string //ok,otherwise error string
+	Created metav1.Time
+	Updated metav1.Time
+	Val     string //start,stop
 }
 
 type RunningStateSpec struct {
-	Updated metav1.Time
-	Val     string //work, pause, rest
+	UpdateTs int64
+	Ts       int64
+	State    uint32 //2-run, 3-stop, 5-not exist
+	ErrNo    uint32
 }
 
 // +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
